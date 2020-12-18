@@ -17,14 +17,7 @@ typedef unsigned char octet_t;
 
 static dico_t DICO;
 
-
-
 int pfd[2];
-
-void erreur(char *msg) {
-    printf("Erreur : %s\n", msg);
-    exit(1);
-}
 
 void init_dictionnary() {
     for (int i = 0; i < 256; i++) {
