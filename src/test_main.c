@@ -175,17 +175,17 @@ void test_decode(char * filename) {
 
 int main(int argc, char * argv[]) {
     char * filename = "files/base_a.txt";
-    //printf("test_pack_unpack_couple: %s\n", test_pack_unpack_couple() == 0 ? "SUCCESS" : "FAILED");
-    //test_emit_receive();
+    printf("test_pack_unpack_couple: %s\n", test_pack_unpack_couple() == 0 ? "SUCCESS" : "FAILED");
+    test_emit_receive();
 
-    /*printf("test_add_dictionary: %s\n", test_add_dictionary() == 0 ? "SUCCESS" : "FAILED");
+    printf("test_add_dictionary: %s\n", test_add_dictionary() == 0 ? "SUCCESS" : "FAILED");
     printf("test_add_dictionary_size: %s\n", test_add_dictionary_size() == 0 ? "SUCCESS" : "FAILED");
     printf("test_contain_dictionary_true: %s\n", test_contain_dictionary_true() == 0 ? "SUCCESS" : "FAILED");
     printf("test_contain_dictionary_false: %s\n", test_contain_dictionary_false() == 0 ? "SUCCESS" : "FAILED");
     printf("test_empty_dictionary: %s\n", test_empty_dictionary() == 0 ? "SUCCESS" : "FAILED");
     printf("test_contain_dictionary_ascii: %s\n", test_contain_dictionary_ascii() == 0 ? "SUCCESS" : "FAILED");
-    printf("test_get_entry_dict: %s\n", test_get_entry_dict() == 0 ? "SUCCESS" : "FAILED");*/
+    printf("test_get_entry_dict: %s\n", test_get_entry_dict() == 0 ? "SUCCESS" : "FAILED");
 
     test_encode(filename);
-    //test_decode(filename);
+    test_decode(filename);
 }

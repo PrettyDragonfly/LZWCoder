@@ -1,5 +1,5 @@
 #include "utils.h"
-#define DEBUG
+//#define DEBUG
 
 void print_error_and_exit(char *msg, ...) {
     va_list argptr;
@@ -42,14 +42,18 @@ void emit_code(int file, int code) {
     static int cpt = 0;
     static int couple[2];
 
+    if (code < 0) {
+        print_error_and_exit("Non ASCII character detected, aborting");
+    }
+
     cpt += 1;
     g_cpt++;
     if (cpt == 2) {
         cpt = 0;
         couple[1] = code;
-        byte_t *triplet = pack_couple(couple[0], couple[1]);
+        char *triplet = pack_couple(couple[0], couple[1]);
 
-        if (write(file, triplet, 3 * sizeof(byte_t)) == -1) {
+        if (write(file, triplet, 3 * sizeof(char)) == -1) {
             print_error_and_exit("Error while emitting (%d, %d)\n", couple[0], couple[1]);
         }
 
@@ -62,9 +66,9 @@ void emit_code(int file, int code) {
 }
 
 int* receive_couple_of_code(int file) {
-    byte_t *triplet = (byte_t *)calloc(3, sizeof(byte_t));
+    char *triplet = (char *)calloc(3, sizeof(char));
 
-    if (read(file, triplet, 3 * sizeof(byte_t)) == -1)
+    if (read(file, triplet, 3 * sizeof(char)) == -1)
         print_error_and_exit("Error while receiving couple of codes");
 
     int *couple = unpack_couple(triplet);

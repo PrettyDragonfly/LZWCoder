@@ -2,7 +2,6 @@
 #include "utils.h"
 
 void encode_text(char * filename, int dest) {
-    printf("Start encode_text\n");
     FILE *fd = fopen(filename, "r");
 
     if (fd == NULL) {
@@ -20,12 +19,14 @@ void encode_text(char * filename, int dest) {
     char *str_current_symbol = malloc(1);
     *str_current_symbol = '\0';
 
+    int index = 0;
+
     while (next_char != EOF) {
         char *str_eval = malloc(strlen(str_current_symbol) + 2);
         strcpy(str_eval, str_current_symbol);
         strcat(str_eval, str_next_char);
 
-        int index = dict_contains(d, str_eval);
+        index = dict_contains(d, str_eval);
 
         if (index != -1) {
             str_current_symbol = str_eval;
@@ -49,6 +50,10 @@ void encode_text(char * filename, int dest) {
         str_next_char[0] = next_char;
     }
 
+    if(index != -1) {
+        emit_code(dest, dict_contains(d, str_current_symbol));
+        codes_emitted++;
+    }
     emit_code(dest, END_OF_STREAM);
 
     if (codes_emitted % 2 == 0) {
@@ -62,8 +67,6 @@ void encode_text(char * filename, int dest) {
     if (close(dest) == -1) {
         print_error_and_exit("Could not close destination");
     }
-
-    printf("End encode_text\n");
 }
 
 void decode_text(int src, FILE * dest) {
@@ -124,6 +127,4 @@ void decode_text(int src, FILE * dest) {
     if(close(src) == -1) {
         print_error_and_exit("Error while closing source");
     }
-
-    printf("\nEnd of decoder\n");
 }

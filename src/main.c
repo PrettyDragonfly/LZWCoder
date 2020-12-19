@@ -3,19 +3,15 @@
 #include <sys/wait.h>
 
 void parent(char * filename, int pipe) {
-    printf("Start parent\n");
     encode_text(filename, pipe);
 
     if (wait(NULL) == -1) {
         print_error_and_exit("Error while waiting");
     }
-    printf("End parent\n");
 }
 
 void child(int pipe, FILE * dest) {
-    printf("Start child\n");
     decode_text(pipe, dest);
-    printf("End child\n");
 }
 
 
