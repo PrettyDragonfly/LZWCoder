@@ -174,7 +174,7 @@ void test_decode(char * filename) {
 }
 
 int main(int argc, char * argv[]) {
-    char * filename = "files/Text_de_base.txt";
+    char * filename = "files/base_a.txt";
     //printf("test_pack_unpack_couple: %s\n", test_pack_unpack_couple() == 0 ? "SUCCESS" : "FAILED");
     //test_emit_receive();
 
@@ -186,6 +186,6 @@ int main(int argc, char * argv[]) {
     printf("test_contain_dictionary_ascii: %s\n", test_contain_dictionary_ascii() == 0 ? "SUCCESS" : "FAILED");
     printf("test_get_entry_dict: %s\n", test_get_entry_dict() == 0 ? "SUCCESS" : "FAILED");*/
 
-    //test_encode(filename);
-    test_decode(filename);
+    test_encode(filename);
+    //test_decode(filename);
 }

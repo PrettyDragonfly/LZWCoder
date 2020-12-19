@@ -9,7 +9,7 @@ void encode_text(char * filename, int dest) {
         print_error_and_exit("Could not open file %s\n", filename);
     }
 
-    dict_t* d = malloc(sizeof(dict_t));
+    dict_t* d = (dict_t*) calloc(1, sizeof(dict_t));
 
     int codes_emitted = 0;
     char next_char = (char) fgetc(fd);
@@ -21,7 +21,7 @@ void encode_text(char * filename, int dest) {
     *str_current_symbol = '\0';
 
     while (next_char != EOF) {
-        char *str_eval = malloc(strlen(str_current_symbol) + 1);
+        char *str_eval = malloc(strlen(str_current_symbol) + 2);
         strcpy(str_eval, str_current_symbol);
         strcat(str_eval, str_next_char);
 
@@ -42,9 +42,10 @@ void encode_text(char * filename, int dest) {
 
             add_entry(d, str_eval);
             strcpy(str_current_symbol, str_next_char);
+            free(str_eval);
         }
 
-        next_char = (char) fgetc(fd);
+        next_char = (byte_t) fgetc(fd);
         str_next_char[0] = next_char;
     }
 
@@ -67,7 +68,7 @@ void encode_text(char * filename, int dest) {
 
 void decode_text(int src, FILE * dest) {
 
-    dict_t* d = malloc(sizeof(dict_t));
+    dict_t* d = (dict_t*) calloc(1, sizeof(dict_t));
 
     int *couple = receive_couple_of_code(src);
     int k = couple[0];

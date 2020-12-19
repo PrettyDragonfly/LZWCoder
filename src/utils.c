@@ -1,5 +1,5 @@
 #include "utils.h"
-//#define DEBUG
+#define DEBUG
 
 void print_error_and_exit(char *msg, ...) {
     va_list argptr;
@@ -38,10 +38,12 @@ int *unpack_couple(const byte_t *triplet) {
 }
 
 void emit_code(int file, int code) {
+    static int g_cpt = 0;
     static int cpt = 0;
     static int couple[2];
 
     cpt += 1;
+    g_cpt++;
     if (cpt == 2) {
         cpt = 0;
         couple[1] = code;
@@ -52,7 +54,7 @@ void emit_code(int file, int code) {
         }
 
 #ifdef DEBUG
-        printf("Emitted couple (%d, %d)\n", couple[0], couple[1]);
+        printf("Emitted couple (%d, %d) - %d\n", couple[0], couple[1], g_cpt);
 #endif
     } else {
         couple[0] = code;
@@ -82,7 +84,7 @@ void empty_dictionary(dict_t* d) {
 
 int dict_contains(dict_t *d, char *str) {
     if (strlen(str) == 1) {
-        return (int) str[0];
+        return (char) str[0];
     }
 
     for (int i = 0; i < d->nb_entries; i++) {
@@ -102,7 +104,7 @@ void add_entry(dict_t* d, char* str) {
 char * get_entry(dict_t * d, int k) {
     if (k < 256) {
         char *s = (char *)malloc(1);
-        *s = (byte_t) k;
+        *s = (char) k;
         return s;
     } else if (k < d->nb_entries + 258) {
         return d->entries[k - 258];
